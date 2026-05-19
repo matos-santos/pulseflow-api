@@ -60,7 +60,9 @@ public static class DependencyInjection
 
         // Register specific repositories
         services.AddScoped<ISampleRepository, SampleRepository>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

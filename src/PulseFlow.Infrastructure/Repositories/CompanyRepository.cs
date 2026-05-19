@@ -4,9 +4,9 @@ using PulseFlow.Infrastructure.Persistence;
 
 namespace PulseFlow.Infrastructure.Repositories;
 
-public class UserRepository : BaseRepository<User, Guid>, IUserRepository
+public class CompanyRepository : BaseRepository<Companies, Guid>, ICompanyRepository
 {
-    public UserRepository(ApplicationDbContext context) : base(context)
+    public CompanyRepository(ApplicationDbContext context) : base(context)
     {
     }
 }

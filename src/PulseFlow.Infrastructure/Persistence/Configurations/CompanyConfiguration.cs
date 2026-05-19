@@ -1,0 +1,74 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using PulseFlow.Domain.Entities;
+
+namespace PulseFlow.Infrastructure.Persistence.Configurations;
+
+public class CompanyConfiguration : IEntityTypeConfiguration<Companies>
+{
+    public void Configure(EntityTypeBuilder<Companies> builder)
+    {
+        builder.ToTable("companies");
+
+        builder.HasKey(c => c.Id);
+
+        builder
+            .Property(c => c.Id)
+            .ValueGeneratedNever()
+            .IsRequired();
+
+        builder
+            .Property(c => c.Name)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder
+            .Property(c => c.Slug)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder
+            .Property(c => c.IsActive)
+            .IsRequired();
+
+        builder
+            .Property(c => c.CreatedAt)
+            .IsRequired();
+
+        builder
+            .Property(c => c.CreatedBy)
+            .HasMaxLength(255);
+
+        builder
+            .Property(c => c.UpdatedBy)
+            .HasMaxLength(255);
+
+        builder
+            .Property(c => c.UpdatedAt)
+            .IsRequired();
+
+        builder
+            .HasIndex(c => c.Name)
+            .IsUnique()
+            .HasDatabaseName("IX_Companies_Name");
+
+        builder
+            .HasIndex(c => c.Slug)
+            .IsUnique()
+            .HasDatabaseName("IX_Companies_Slug");
+
+        builder
+            .HasIndex(c => c.IsActive)
+            .HasDatabaseName("IX_Companies_IsActive");
+
+        builder
+            .HasIndex(c => c.CreatedAt)
+            .HasDatabaseName("IX_Companies_CreatedAt");
+
+        builder
+            .HasMany(c => c.Users)
+            .WithOne(u => u.Company)
+            .HasForeignKey(u => u.CompanyId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}

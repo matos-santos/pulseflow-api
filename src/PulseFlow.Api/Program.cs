@@ -2,9 +2,9 @@ using Asp.Versioning;
 using PulseFlow.Api.Endpoints.V1;
 using PulseFlow.Api.Extensions;
 using PulseFlow.Api.Middlewares;
-using PulseFlow.Infrastructure;
 using Scalar.AspNetCore;
 using Serilog;
+using PulseFlow.Infrastructure;
 
 namespace PulseFlow.Api;
 
