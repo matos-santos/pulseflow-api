@@ -8,7 +8,7 @@ public class User : AuditableEntity<Guid>
     public string FirstName { get; private set; } = string.Empty;
     public string LastName { get; private set; } = string.Empty;
     public string? PhoneNumber { get; private set; }
-    public string PasswordHash { get; private set; }
+    public string PasswordHash { get; private set; } = string.Empty;
     public bool IsActive { get; private set; }
 
     private User() : base() { }
