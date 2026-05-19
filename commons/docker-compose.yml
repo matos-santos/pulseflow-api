@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:17-alpine
+    container_name: pulseflow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pulseflow_user
+      POSTGRES_PASSWORD: pulseflow_password
+      POSTGRES_DB: pulseflow_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5433:5432"
+    networks:
+      - pulseflow-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pulseflow_user -d pulseflow_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PulseFlow API
+  api:
+    build:
+      context: ..
+      dockerfile: commons/Dockerfile
+    container_name: pulseflow-api
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=pulseflow_db;Username=pulseflow_user;Password=pulseflow_password;
+      - Serilog__MinimumLevel__Default=Information
+    ports:
+      - "5000:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - pulseflow-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  pulseflow-network:
+    driver: bridge

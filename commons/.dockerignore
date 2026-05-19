@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+**/Dockerfile*
+**/docker-compose*
+.dockerignore
+
+# Build output
+**/bin/
+**/obj/
+**/out/
+**/TestResults/
+
+# IDEs
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+**/logs/
+**/*.log
+
+# Node modules (if any)
+**/node_modules/
+
+# Test coverage
+**/coverage/
+**/*.coverage
+**/*.coveragexml
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Documentation
+**/docs/
+**/*.md
+LICENSE
+
+# Commons folder (to avoid recursive copy)
+commons/
