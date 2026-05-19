@@ -1,0 +1,19 @@
+### Health Check - Status Geral
+# Retorna o status de todos os health checks configurados
+GET {{PulseFlow.Api_HostAddress}}/health
+
+###
+
+### Health Check - Readiness Probe
+# Verifica se a aplicação está pronta para receber tráfego
+# Executa apenas health checks com tag 'ready'
+GET {{PulseFlow.Api_HostAddress}}/health/ready
+
+###
+
+### Health Check - Liveness Probe
+# Verifica se a aplicação está respondendo (alive)
+# Não executa checks de dependências
+GET {{PulseFlow.Api_HostAddress}}/health/live
+
+###

@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/commons/" />
+  <Folder Name="/src/">
+    <Project Path="src/PulseFlow.Api/Api.csproj" />
+    <Project Path="src/PulseFlow.Application/Application.csproj" />
+    <Project Path="src/PulseFlow.Domain/Domain.csproj" />
+    <Project Path="src/PulseFlow.Infastructure/Infastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PulseFlow.IntegrationTests/PulseFlow.IntegrationTests.csproj" />
+    <Project Path="tests/PulseFlow.UnitTests/PulseFlow.UnitTests.csproj" />
+  </Folder>
+</Solution>
