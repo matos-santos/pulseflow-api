@@ -4,9 +4,9 @@ using PulseFlow.Domain.Entities;
 
 namespace PulseFlow.Infrastructure.Persistence.Configurations;
 
-public class CompanyConfiguration : IEntityTypeConfiguration<Companies>
+public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 {
-    public void Configure(EntityTypeBuilder<Companies> builder)
+    public void Configure(EntityTypeBuilder<Company> builder)
     {
         builder.ToTable("companies");
 

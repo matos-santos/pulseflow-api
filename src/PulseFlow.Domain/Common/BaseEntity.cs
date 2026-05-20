@@ -1,3 +1,5 @@
+using Medo;
+
 namespace PulseFlow.Domain.Common;
 
 /// <summary>
@@ -6,10 +8,19 @@ namespace PulseFlow.Domain.Common;
 /// <typeparam name="TKey">The type of the entity's primary key</typeparam>
 public abstract class BaseEntity<TKey> : IEntity<TKey> where TKey : notnull
 {
-    public TKey Id { get; protected set; } = default!;
+    public TKey Id { get; private set; }
 
     protected BaseEntity()
     {
+        // Only works if TKey is Guid
+        if (typeof(TKey) == typeof(Guid))
+        {
+            Id = (TKey)(object)Uuid7.NewUuid7().ToGuid();
+        }
+        else
+        {
+            Id = default!;
+        }
     }
 
     protected BaseEntity(TKey id)

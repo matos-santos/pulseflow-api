@@ -23,7 +23,7 @@ public class ApplicationDbContext : DbContext
     // DbSets
     public DbSet<SampleEntity> Samples => Set<SampleEntity>();
     public DbSet<User> Users => Set<User>();
-    public DbSet<Companies> Companies => Set<Companies>();
+    public DbSet<Company> Companies => Set<Company>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

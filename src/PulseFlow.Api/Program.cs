@@ -5,6 +5,7 @@ using PulseFlow.Api.Middlewares;
 using Scalar.AspNetCore;
 using Serilog;
 using PulseFlow.Infrastructure;
+using PulseFlow.Application;
 
 namespace PulseFlow.Api;
 
@@ -24,6 +25,7 @@ public class Program
 
         // Add Infrastructure services (Database, Repositories, etc.)
         builder.Services.AddInfrastructure(builder.Configuration);
+        builder.Services.AddApplication();
 
         builder.Services.AddApiVersioning(options =>
         {
@@ -83,6 +85,7 @@ public class Program
             .Build();
 
         app.MapWeatherForecastsV1(apiVersion);
+        app.MapCompaniesV1(apiVersion);
 
         app.UseSerilogRequestLogging();
         app.UseMiddleware<GlobalExceptionMiddleware>();

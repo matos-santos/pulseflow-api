@@ -1,4 +1,5 @@
 ﻿using PulseFlow.Domain.Common;
+using PulseFlow.Domain.Enums;
 
 namespace PulseFlow.Domain.Entities;
 
@@ -14,13 +15,43 @@ public class User : AuditableEntity<Guid>
 
     public string Role { get; private set; } = string.Empty;
 
-    public Companies Company { get; set; }
-    public List<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public Company? Company { get; set; }
+    public List<RefreshToken>? RefreshTokens { get; set; } = new List<RefreshToken>();
 
     private User() : base() { }
 
-    public User(string email, string firstName, string lastName, string? phoneNumber, string passwordHash, bool isActive, string role)
+    public User(Company company, string email, 
+        string firstName, 
+        string lastName, 
+        string passwordHash, 
+        bool isActive, 
+        string role,
+        string? phoneNumber 
+        )
         : base(Guid.NewGuid())
+    {
+        var roleToDb = RoleExtensions.ToDbString((Role)Enum.Parse(typeof(Role), role));
+
+        Company = company;
+        CompanyId = company.Id;
+        Email = email;
+        FirstName = firstName;
+        LastName = lastName;
+        PhoneNumber = phoneNumber;
+        PasswordHash = passwordHash;
+        IsActive = isActive;
+        Role = roleToDb;
+    }
+
+    public void UpdateProfile(
+        string email, 
+        string firstName, 
+        string lastName, 
+        string passwordHash,
+        bool isActive,
+        string role,
+        string? phoneNumber 
+        )
     {
         Email = email;
         FirstName = firstName;
@@ -28,15 +59,7 @@ public class User : AuditableEntity<Guid>
         PhoneNumber = phoneNumber;
         PasswordHash = passwordHash;
         IsActive = isActive;
-        Role = role;
-    }
-
-    public void UpdateProfile(string firstName, string lastName, string? phoneNumber, string email)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        PhoneNumber = phoneNumber;
-        Email = email;
+        Role = RoleExtensions.ToDbString((Role)Enum.Parse(typeof(Role), role));
     }
 
     public void Activate()

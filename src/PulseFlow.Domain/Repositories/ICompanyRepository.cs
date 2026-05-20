@@ -2,6 +2,6 @@
 
 namespace PulseFlow.Domain.Repositories;
 
-public interface ICompanyRepository : IRepository<Companies, Guid>
+public interface ICompanyRepository : IRepository<Company, Guid>
 {
 }

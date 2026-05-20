@@ -2,7 +2,7 @@
 
 namespace PulseFlow.Domain.Entities;
 
-public class Companies : AuditableEntity<Guid>
+public class Company : AuditableEntity<Guid>
 {
     public string Name { get; private set; } = string.Empty;
 
@@ -12,9 +12,9 @@ public class Companies : AuditableEntity<Guid>
 
     public List<User> Users { get; set; } = new List<User>();
 
-    private Companies() : base() { }
+    private Company() : base() { }
 
-    public Companies(string name, string slug, bool isActive)
+    public Company(string name, string slug, bool isActive)
     {
         Name = name;
         Slug = slug;
@@ -37,6 +37,29 @@ public class Companies : AuditableEntity<Guid>
     {
         IsActive = false;
         UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddUserDefault(
+        string email, 
+        string firstName, 
+        string lastName, 
+        string password, 
+        string role,
+        string? phoneNumber
+        )
+    {
+
+        var user = new User(
+            this,
+            email,
+            firstName, 
+            lastName, 
+            password, 
+            true,
+            role,
+            phoneNumber 
+            );
+        Users.Add(user);
     }
 
 }

@@ -4,8 +4,8 @@ namespace PulseFlow.Domain.Common;
 /// Base class for auditable entities
 /// </summary>
 /// <typeparam name="TKey">The type of the entity's primary key</typeparam>
-public abstract class AuditableEntity<TKey> : BaseEntity<TKey>, IAuditableEntity 
-    where TKey : notnull
+public abstract class AuditableEntity<Guid> : BaseEntity<Guid>, IAuditableEntity 
+    where Guid : notnull
 {
     public DateTime CreatedAt { get; set; }
     public string? CreatedBy { get; set; }
@@ -15,10 +15,12 @@ public abstract class AuditableEntity<TKey> : BaseEntity<TKey>, IAuditableEntity
     protected AuditableEntity() : base()
     {
         CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
-    protected AuditableEntity(TKey id) : base(id)
+    protected AuditableEntity(Guid id) : base(id)
     {
         CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 }
