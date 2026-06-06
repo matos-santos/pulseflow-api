@@ -41,13 +41,12 @@ public static class DependencyInjection
                     errorCodesToAdd: null);
             });
 
-            // Enable sensitive data logging in development
+
             if (configuration["Logging:EnableSensitiveDataLogging"] == "true")
             {
                 options.EnableSensitiveDataLogging();
             }
 
-            // Enable detailed errors in development
             if (configuration["Logging:EnableDetailedErrors"] == "true")
             {
                 options.EnableDetailedErrors();
@@ -60,7 +59,9 @@ public static class DependencyInjection
 
         // Register specific repositories
         services.AddScoped<ISampleRepository, SampleRepository>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

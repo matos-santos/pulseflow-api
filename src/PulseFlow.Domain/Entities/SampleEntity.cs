@@ -1,5 +1,3 @@
-using PulseFlow.Domain.Common;
-
 namespace PulseFlow.Domain.Entities;
 
 /// <summary>

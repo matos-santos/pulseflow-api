@@ -1,4 +1,4 @@
-namespace PulseFlow.Domain.Common;
+namespace PulseFlow.Domain.Common.Interfaces.Domain;
 
 /// <summary>
 /// Interface for entities that support soft deletion

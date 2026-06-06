@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using PulseFlow.Domain.Common;
+using PulseFlow.Domain.Common.Interfaces.Domain;
 
 namespace PulseFlow.Infrastructure.Persistence.Interceptors;
 
@@ -51,7 +51,7 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
             }
         }
 
-        foreach (var entry in context.ChangeTracker.Entries<ISoftDeletable>())
+        foreach (var entry in context.ChangeTracker.Entries<ISoftDelete>())
         {
             if (entry.State == EntityState.Deleted)
             {

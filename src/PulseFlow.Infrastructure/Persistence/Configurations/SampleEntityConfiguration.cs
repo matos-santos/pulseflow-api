@@ -41,6 +41,17 @@ public class SampleEntityConfiguration : IEntityTypeConfiguration<SampleEntity>
         builder.Property(e => e.UpdatedBy)
             .HasMaxLength(100);
 
+        builder.Property(e => e.IsDeleted)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+        builder.Property(e => e.DeletedAt)
+            .IsRequired(false);
+
+        builder.Property(e => e.DeletedBy)
+            .HasMaxLength(100)
+            .IsRequired(false);
+
         // Indexes
         builder.HasIndex(e => e.Name)
             .HasDatabaseName("IX_Samples_Name");

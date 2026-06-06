@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using PulseFlow.Domain.Common;
+using PulseFlow.Domain.Common.Interfaces.Domain;
 using PulseFlow.Domain.Repositories;
 using PulseFlow.Infrastructure.Persistence;
 

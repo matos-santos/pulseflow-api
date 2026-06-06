@@ -1,7 +1,6 @@
 using PulseFlow.Domain.Entities;
-using PulseFlow.Domain.Repositories;
 
-namespace PulseFlow.Infrastructure.Repositories;
+namespace PulseFlow.Domain.Repositories;
 
 /// <summary>
 /// Repository interface for SampleEntity

@@ -1,4 +1,5 @@
-﻿using PulseFlow.Api.Common.Models;
+﻿using FluentValidation;
+using PulseFlow.Api.Common.Models;
 using System.Net;
 
 namespace PulseFlow.Api.Middlewares;
@@ -37,6 +38,16 @@ public class GlobalExceptionMiddleware
 
         switch (exception)
         {
+            case ValidationException validationException:
+                errorResponse = HandleValidationException(validationException, traceId, path, method, LogLevel.Warning);
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                break;
+
+            case UnauthorizedAccessException unauthorizedAccessException:
+                errorResponse = ErrorResponse.Unauthorized(unauthorizedAccessException.Message, traceId);
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                break;
+
             case ArgumentException argEx:
                 _logger.LogWarning(argEx,
                     "Bad Request: {Message} | TraceId: {TraceId} | Path: {Path} | Method: {Method}",
@@ -82,7 +93,7 @@ public class GlobalExceptionMiddleware
                     type: "InternalServerError",
                     title: "An unexpected error occurred.",
                     status: (int)HttpStatusCode.InternalServerError,
-                    detail: _webHostEnvironment.IsDevelopment() ? exception.ToString() : null,
+                    detail: _webHostEnvironment.IsDevelopment() ? exception.Message : null,
                     traceId: traceId
                 );
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -91,5 +102,16 @@ public class GlobalExceptionMiddleware
 
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsJsonAsync(errorResponse);
+    }
+
+    private ErrorResponse HandleValidationException(ValidationException validationException, string traceId, string path, string method, LogLevel logLevel)
+    {
+        _logger.Log(logLevel, validationException,
+            "Validation Failed: {Message} | TraceId: {TraceId} | Path: {Path} | Method: {Method}",
+            validationException.Message, traceId, path, method);
+
+        var errors = validationException.Errors.GroupBy(e => e.PropertyName)
+            .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+        return ErrorResponse.ValidateError(errors, traceId);
     }
 }

@@ -1,4 +1,4 @@
-namespace PulseFlow.Domain.Common;
+namespace PulseFlow.Domain.Common.Interfaces.Domain;
 
 /// <summary>
 /// Base interface for all entities
@@ -11,7 +11,7 @@ public interface IEntity
 /// Base interface for entities with a specific key type
 /// </summary>
 /// <typeparam name="TKey">The type of the entity's primary key</typeparam>
-public interface IEntity<TKey> : IEntity where TKey : notnull
+public interface IEntity<Guid> : IEntity where Guid : notnull
 {
-    TKey Id { get; }
+    Guid Id { get; }
 }
