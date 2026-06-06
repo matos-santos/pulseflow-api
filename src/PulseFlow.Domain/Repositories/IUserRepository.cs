@@ -4,4 +4,5 @@ namespace PulseFlow.Domain.Repositories;
 
 public interface IUserRepository : IRepository<User, Guid>
 {
+    Task<User> GetUserByEmail(string email);
 }

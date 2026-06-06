@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using PulseFlow.Application.Common.Behaviors;
+using PulseFlow.Application.Common.Interfaces;
+using PulseFlow.Application.Common.Services;
 
 namespace PulseFlow.Application;
 
@@ -16,6 +18,8 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
+        services.AddScoped<IJwtService, JwtService>();
 
         return services;
     }

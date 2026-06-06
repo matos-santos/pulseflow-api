@@ -2,6 +2,7 @@
 using PulseFlow.Domain.Repositories;
 using PulseFlow.Domain.Entities;
 using PulseFlow.Domain.Enums;
+using PulseFlow.Domain.Common.Helpers;
 
 namespace PulseFlow.Application.UseCase.Companies.RegisterCompany;
 
@@ -21,11 +22,13 @@ public class RegisterCompanyUseCase(
 
         await companyRepository.AddAsync(company, cancellationToken);
 
+        var passwordHash = PasswordHelper.HashPassword(request.Password);
+
         company.AddUserDefault(
             request.Email,
             request.FirstName,
             request.LastName,
-            request.Password,
+            passwordHash,
             RoleExtensions.ToDbString(Role.ADMIN),
             request.PhoneNumber
             );

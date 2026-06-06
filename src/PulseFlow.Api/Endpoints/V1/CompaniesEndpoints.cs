@@ -4,7 +4,7 @@ using PulseFlow.Application.UseCase.Companies.RegisterCompany;
 
 namespace PulseFlow.Api.Endpoints.V1;
 
-public static class CompaniesEndpoint
+public static class CompaniesEndpoints
 {
 
 

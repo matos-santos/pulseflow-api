@@ -28,6 +28,30 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
             .HasMaxLength(500);
 
         builder
+            .Property(rt => rt.IsRevoked)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+        builder
+            .Property(rt => rt.RevokedReason)
+            .IsRequired(false)
+            .HasMaxLength(200);
+
+        builder
+            .Property(rt => rt.RevokedAt)
+            .IsRequired(false);
+
+        builder
+            .Property(rt => rt.ReplacedByToken)
+            .HasMaxLength(500)
+            .IsRequired(false);
+
+        builder
+            .Property(rt => rt.AccessTokenJti)
+            .HasMaxLength(100)
+            .IsRequired(false);
+
+        builder
             .Property(rt => rt.ExpiresAt)
             .IsRequired();
 
@@ -36,6 +60,15 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
             .WithMany(u => u.RefreshTokens)
             .HasForeignKey(rt => rt.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(rt => rt.Token)
+            .HasDatabaseName("IX_RefreshTokens_Token")
+            .IsUnique();
+
+        builder.HasIndex(rt => rt.AccessTokenJti)
+            .HasDatabaseName("IX_RefreshTokens_AccessTokenJti")
+            .IsUnique();
+
 
     }
 }

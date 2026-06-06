@@ -1,4 +1,6 @@
-namespace PulseFlow.Domain.Common;
+using PulseFlow.Domain.Common.Interfaces.Domain;
+
+namespace PulseFlow.Domain.Entities;
 
 /// <summary>
 /// Base class for soft-deletable entities

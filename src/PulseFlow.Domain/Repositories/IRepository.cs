@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using PulseFlow.Domain.Common;
+using PulseFlow.Domain.Common.Interfaces.Domain;
 
 namespace PulseFlow.Domain.Repositories;
 

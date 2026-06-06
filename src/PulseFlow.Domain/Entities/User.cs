@@ -1,5 +1,4 @@
-﻿using PulseFlow.Domain.Common;
-using PulseFlow.Domain.Enums;
+﻿using PulseFlow.Domain.Enums;
 
 namespace PulseFlow.Domain.Entities;
 
@@ -12,6 +11,7 @@ public class User : AuditableEntity<Guid>
     public string? PhoneNumber { get; private set; }
     public string PasswordHash { get; private set; } = string.Empty;
     public bool IsActive { get; private set; }
+    public  DateTime? LastLogin { get; private set; }
 
     public string Role { get; private set; } = string.Empty;
 
@@ -62,15 +62,27 @@ public class User : AuditableEntity<Guid>
         Role = RoleExtensions.ToDbString((Role)Enum.Parse(typeof(Role), role));
     }
 
-    public void Activate()
+    public void Activate(string updatedBy)
     {
         IsActive = true;
-        UpdatedAt = DateTime.UtcNow;
+        Update(updatedBy);
     }
 
-    public void Deactivate()
+    public void Deactivate(string updatedBy)
     {
         IsActive = false;
-        UpdatedAt = DateTime.UtcNow;
+        Update(updatedBy);
+    }
+
+    public void UpdateLastLogin(string updatedBy)
+    {
+        LastLogin = DateTime.UtcNow;
+        Update(updatedBy);
+    }
+
+
+    public string GetFullName()
+    {
+        return $"{FirstName} {LastName}";
     }
 }

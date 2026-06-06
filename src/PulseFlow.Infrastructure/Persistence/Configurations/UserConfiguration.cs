@@ -69,6 +69,24 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder
+            .Property(u => u.LastLogin)
+            .IsRequired(false);
+
+        builder
+            .Property(u => u.IsDeleted)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+        builder
+            .Property(u => u.DeletedAt)
+            .IsRequired(false);
+
+        builder
+            .Property(u => u.DeletedBy)
+            .HasMaxLength(255)
+            .IsRequired(false);
+
+        builder
             .HasIndex(u => u.Email)
             .IsUnique()
             .HasDatabaseName("IX_Users_Email");

@@ -1,6 +1,4 @@
-﻿using PulseFlow.Domain.Common;
-
-namespace PulseFlow.Domain.Entities;
+﻿namespace PulseFlow.Domain.Entities;
 
 public class Company : AuditableEntity<Guid>
 {

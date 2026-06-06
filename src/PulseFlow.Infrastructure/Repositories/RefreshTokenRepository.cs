@@ -1,4 +1,5 @@
-﻿using PulseFlow.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PulseFlow.Domain.Entities;
 using PulseFlow.Domain.Repositories;
 using PulseFlow.Infrastructure.Persistence;
 
@@ -8,5 +9,10 @@ public class RefreshTokenRepository : BaseRepository<RefreshToken, Guid>, IRefre
 {
     public RefreshTokenRepository(ApplicationDbContext context) : base(context)
     {
+    }
+
+    public async Task<RefreshToken?> GetByTokenAsync(string token, CancellationToken cancellationToken)
+    {
+        return await DbSet.FirstOrDefaultAsync(rt => rt.Token == token, cancellationToken);
     }
 }

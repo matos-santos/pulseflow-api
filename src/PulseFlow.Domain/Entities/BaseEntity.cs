@@ -1,6 +1,7 @@
 using Medo;
+using PulseFlow.Domain.Common.Interfaces.Domain;
 
-namespace PulseFlow.Domain.Common;
+namespace PulseFlow.Domain.Entities;
 
 /// <summary>
 /// Base class for all entities with a specific key type

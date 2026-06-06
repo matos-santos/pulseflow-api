@@ -48,6 +48,20 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
             .IsRequired();
 
         builder
+            .Property(c => c.IsDeleted)
+            .IsRequired()
+            .HasDefaultValue(false);
+
+        builder
+            .Property(c => c.DeletedAt)
+            .IsRequired(false);
+
+        builder
+            .Property(c => c.DeletedBy)
+            .HasMaxLength(255)
+            .IsRequired(false);
+
+        builder
             .HasIndex(c => c.Name)
             .IsUnique()
             .HasDatabaseName("IX_Companies_Name");

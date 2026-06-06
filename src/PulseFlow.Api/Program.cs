@@ -6,6 +6,7 @@ using Scalar.AspNetCore;
 using Serilog;
 using PulseFlow.Infrastructure;
 using PulseFlow.Application;
+using PulseFlow.Application.Common.Models;
 
 namespace PulseFlow.Api;
 
@@ -22,6 +23,9 @@ public class Program
         });
 
         // Add services to the container.
+
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+        builder.Services.Configure<JwtSettings>(jwtSettings);
 
         // Add Infrastructure services (Database, Repositories, etc.)
         builder.Services.AddInfrastructure(builder.Configuration);
@@ -85,6 +89,7 @@ public class Program
             .Build();
 
         app.MapWeatherForecastsV1(apiVersion);
+        app.MapAuthEndpointsV1(apiVersion);
         app.MapCompaniesV1(apiVersion);
 
         app.UseSerilogRequestLogging();

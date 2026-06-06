@@ -1,5 +1,7 @@
+using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using PulseFlow.Domain.Common.Interfaces.Domain;
 using PulseFlow.Domain.Entities;
 using PulseFlow.Infrastructure.Persistence.Interceptors;
 
@@ -39,11 +41,17 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         // Apply global query filters for soft delete
-        modelBuilder.Entity<SampleEntity>()
-            .HasQueryFilter(e => !EF.Property<bool>(e, "IsDeleted"));
-        
-        modelBuilder.Entity<User>()
-            .HasQueryFilter(e => !EF.Property<bool>(e, "IsDeleted"));
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+                var property = Expression.Property(parameter, nameof(ISoftDelete.IsDeleted));
+                var filter = Expression.Lambda(Expression.Not(property), parameter);
+
+                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(filter);
+            }
+        }
 
         base.OnModelCreating(modelBuilder);
     }

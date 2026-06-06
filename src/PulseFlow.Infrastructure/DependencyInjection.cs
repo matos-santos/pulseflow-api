@@ -41,13 +41,12 @@ public static class DependencyInjection
                     errorCodesToAdd: null);
             });
 
-            // Enable sensitive data logging in development
+
             if (configuration["Logging:EnableSensitiveDataLogging"] == "true")
             {
                 options.EnableSensitiveDataLogging();
             }
 
-            // Enable detailed errors in development
             if (configuration["Logging:EnableDetailedErrors"] == "true")
             {
                 options.EnableDetailedErrors();

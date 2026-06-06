@@ -1,4 +1,4 @@
-namespace PulseFlow.Domain.Common;
+namespace PulseFlow.Domain.Common.Interfaces.Domain;
 
 /// <summary>
 /// Base interface for all entities
