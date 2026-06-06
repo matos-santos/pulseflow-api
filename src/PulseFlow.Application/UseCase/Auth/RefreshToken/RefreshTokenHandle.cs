@@ -42,6 +42,6 @@ public class RefreshTokenHandle(
             throw new UnauthorizedAccessException("Token inválido.");
         }
 
-        if (refreshToken.Is)
+        throw new NotImplementedException();
     }
 }
